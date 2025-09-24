@@ -4,12 +4,62 @@ const navLinks = document.querySelector('.nav-links');
 
 mobileMenuBtn.addEventListener('click', () => {
     navLinks.classList.toggle('active');
+    // Add animation to hamburger icon
+    const icon = mobileMenuBtn.querySelector('i');
+    if (navLinks.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+    } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+    }
 });
 
 // Close mobile menu when clicking a link
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
         navLinks.classList.remove('active');
+        // Reset hamburger icon
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+        
+        // Remove active class from all links
+        document.querySelectorAll('.nav-links a').forEach(navLink => {
+            navLink.classList.remove('active');
+        });
+        
+        // Add active class to clicked link
+        link.classList.add('active');
+    });
+});
+
+// Add active class to current section link
+window.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    
+    // Set active class for home link by default
+    document.querySelector('.nav-links a[href="#home"]').classList.add('active');
+    
+    window.addEventListener('scroll', () => {
+        let current = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            
+            if (pageYOffset >= (sectionTop - 200)) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
     });
 });
 
@@ -155,7 +205,7 @@ if (downloadCVBtn) {
             
             // Create a temporary link element
             const link = document.createElement('a');
-            link.href = 'oumar_cv.pdf';
+            link.href = 'ATS_CV.pdf';
             link.download = 'Oumar_Bagayoko_CV.pdf';
             
             // Append to body, click, and remove
