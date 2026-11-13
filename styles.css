@@ -161,6 +161,26 @@ h4 {
     margin-inline: auto;
 }
 
+.skip-link {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    z-index: 200;
+    padding: 12px 20px;
+    border-radius: 0 0 12px 12px;
+    background: var(--ink);
+    color: #fffaf2;
+    font-size: 0.85rem;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transform: translate(-50%, -120%);
+    transition: transform 0.2s ease;
+}
+
+.skip-link:focus-visible {
+    transform: translate(-50%, 0);
+}
+
 /* ------------------------------------------------------------------ nav */
 
 .navbar {

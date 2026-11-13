@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Oumar Bagayoko - Portfolio</title>
+    <title>Oumar Bagayoko — Cultural Bridge-builder</title>
     <meta name="theme-color" content="#f6f1e7" />
+    <link rel="canonical" href="https://oumarportfolio.vercel.app/" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -21,20 +24,77 @@
     <meta name="keywords" content="Oumar Bagayoko, Cultural Bridge-builder, Arts, Languages, Social Sciences, Portfolio" />
 
     <!-- Open Graph / Social Media Meta Tags -->
-    <meta property="og:title" content="Oumar Bagayoko - Portfolio" />
-    <meta property="og:description" content="Cultural Bridge-builder specializing in arts, languages, and social sciences" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="profile-image.jpg" />
+    <meta property="og:site_name" content="Oumar Bagayoko" />
+    <meta property="og:url" content="https://oumarportfolio.vercel.app/" />
+    <meta property="og:title" content="Oumar Bagayoko — Cultural Bridge-builder" />
+    <meta
+      property="og:description"
+      content="Researcher and educator working across arts, languages and social sciences in Mali, Niger and Indonesia."
+    />
+    <meta property="og:image" content="https://oumarportfolio.vercel.app/social-card.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Oumar Bagayoko — cultural bridge-builder" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Oumar Bagayoko - Portfolio" />
-    <meta name="twitter:description" content="Cultural Bridge-builder specializing in arts, languages, and social sciences" />
-    <meta name="twitter:image" content="profile-image.jpg" />
+    <meta name="twitter:title" content="Oumar Bagayoko — Cultural Bridge-builder" />
+    <meta
+      name="twitter:description"
+      content="Researcher and educator working across arts, languages and social sciences in Mali, Niger and Indonesia."
+    />
+    <meta name="twitter:image" content="https://oumarportfolio.vercel.app/social-card.jpg" />
+    <meta name="twitter:image:alt" content="Oumar Bagayoko — cultural bridge-builder" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Oumar Bagayoko",
+        "url": "https://oumarportfolio.vercel.app/",
+        "image": "https://oumarportfolio.vercel.app/profile-image.jpg",
+        "jobTitle": "Cultural Bridge-builder",
+        "description": "Researcher and educator working across arts, languages and social sciences in Mali, Niger and Indonesia.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Bamako",
+          "addressCountry": "ML"
+        },
+        "knowsLanguage": [
+          "Bambara",
+          "Joula",
+          "Manika",
+          "Arabic",
+          "French",
+          "English",
+          "Bahasa Indonesia"
+        ],
+        "alumniOf": [
+          {
+            "@type": "EducationalOrganization",
+            "name": "Franco-Arab African Private University"
+          },
+          {
+            "@type": "EducationalOrganization",
+            "name": "Islamic University in Niger"
+          }
+        ],
+        "sameAs": [
+          "https://www.instagram.com/bagayokoo291",
+          "https://www.facebook.com/share/1GA66Tcx6X/",
+          "https://t.me/bagayokooumar64"
+        ]
+      }
+    </script>
   </head>
   <body>
+    <a class="skip-link" href="#home">Skip to content</a>
+
     <!-- Navigation -->
-    <nav class="navbar" id="siteNav" role="navigation" aria-label="Main navigation">
+    <nav class="navbar" id="siteNav" aria-label="Main navigation">
       <div class="nav-content">
         <a class="logo" href="#home" aria-label="Oumar Bagayoko — back to top">
           <span class="logo-mark">OB</span>
@@ -46,26 +106,32 @@
           aria-expanded="false"
           aria-controls="nav-links"
         >
-          <i class="fas fa-bars"></i>
+          <i class="fas fa-bars" aria-hidden="true"></i>
         </button>
-        <ul class="nav-links" id="nav-links" role="menubar">
-          <li role="none"><a href="#home" role="menuitem">Home</a></li>
-          <li role="none"><a href="#about" role="menuitem">About</a></li>
-          <li role="none"><a href="#skills" role="menuitem">Skills</a></li>
-          <li role="none"><a href="#education" role="menuitem">Education</a></li>
-          <li role="none"><a href="#experience" role="menuitem">Experience</a></li>
-          <li role="none"><a href="#languages" role="menuitem">Languages</a></li>
-          <li role="none"><a href="#certifications" role="menuitem">Certifications</a></li>
-          <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#languages">Languages</a></li>
+          <li><a href="#certifications">Certifications</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
-        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-          <i class="fas fa-moon"></i>
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          aria-label="Dark mode"
+          aria-pressed="false"
+          title="Toggle dark mode"
+        >
+          <i class="fas fa-moon" aria-hidden="true"></i>
         </button>
       </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
+    <section id="home" class="hero" tabindex="-1">
       <div class="hero-inner container">
         <div class="hero-copy">
           <p class="eyebrow hero-eyebrow">
@@ -681,28 +747,32 @@
                 target="_blank"
                 rel="noopener"
                 title="Contact me on WhatsApp"
-                ><i class="fab fa-whatsapp"></i
+                aria-label="Contact me on WhatsApp"
+                ><i class="fab fa-whatsapp" aria-hidden="true"></i
               ></a>
               <a
                 href="https://www.instagram.com/bagayokoo291?igsh=MWlta295cnlhd2FlNQ%3D%3D&utm_source=qr"
                 target="_blank"
                 rel="noopener"
                 title="Follow me on Instagram"
-                ><i class="fab fa-instagram"></i
+                aria-label="Follow me on Instagram"
+                ><i class="fab fa-instagram" aria-hidden="true"></i
               ></a>
               <a
                 href="https://www.facebook.com/share/1GA66Tcx6X/?mibextid=wwXIfr"
                 target="_blank"
                 rel="noopener"
                 title="Follow me on Facebook"
-                ><i class="fab fa-facebook"></i
+                aria-label="Follow me on Facebook"
+                ><i class="fab fa-facebook" aria-hidden="true"></i
               ></a>
               <a
                 href="https://t.me/bagayokooumar64"
                 target="_blank"
                 rel="noopener"
                 title="Connect with me on Telegram"
-                ><i class="fab fa-telegram"></i
+                aria-label="Connect with me on Telegram"
+                ><i class="fab fa-telegram" aria-hidden="true"></i
               ></a>
             </div>
           </div>

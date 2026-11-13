@@ -49,6 +49,17 @@ if (mobileMenuBtn && navLinks) {
             setMenuState(false);
         }
     });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape' || !navLinks.classList.contains('active')) return;
+        setMenuState(false);
+        const icon = mobileMenuBtn.querySelector('i');
+        if (icon) {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+        mobileMenuBtn.focus();
+    });
 }
 
 // Add active class to current section link
@@ -102,6 +113,7 @@ if (themeToggle) {
 function updateIcon(theme) {
     const icon = themeToggle ? themeToggle.querySelector('i') : null;
     if (icon) icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    if (themeToggle) themeToggle.setAttribute('aria-pressed', String(theme === 'dark'));
 }
 
 // Scroll Animations
@@ -124,6 +136,9 @@ document.querySelectorAll('section:not(#home)').forEach(section => {
 
 // Smooth Scroll
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    // The skip link must keep native behaviour so focus lands on the content.
+    if (anchor.classList.contains('skip-link')) return;
+
     anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
         if (href === '#') return;
@@ -227,7 +242,7 @@ function renderSiteContent(content) {
     }
 
     if (profile.name) {
-        document.title = `${profile.name} - Portfolio`;
+        document.title = `${profile.name} — ${profile.subtitle || 'Portfolio'}`;
         setText('#heroName', profile.name);
     }
     setText('#heroSubtitle', profile.subtitle);
@@ -454,6 +469,7 @@ function renderLinks(links) {
             link.setAttribute('aria-label', social.title);
             const icon = document.createElement('i');
             icon.className = social.icon;
+            icon.setAttribute('aria-hidden', 'true');
             link.append(icon);
             return link;
         })

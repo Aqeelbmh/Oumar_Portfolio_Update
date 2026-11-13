@@ -79,7 +79,7 @@ Open `/admin.html` and sign in with `ADMIN_USERNAME` / `ADMIN_PASSWORD`.
 
 - **Inbox** — every contact form submission. Open a message to read it, reply by email, copy the address, mark read/unread, archive, or delete. Unread count appears in the sidebar.
 - **Content tabs** — edit the profile, skills, education, experience, languages, certifications and footer links. Each list has **Add**, **Move up/down** and **Remove** controls, then **Save changes**.
-- **Profile photo** — in *Profile & About*, use **Upload photo** to replace the portrait; the image is resized in the browser, stored in the database and served from `/media`. You can also paste a path such as `profile-image.jpg` or a full `https://` URL.
+- **Profile photo** — in *Profile & About*, use **Upload photo** to replace the portrait; the image is resized in the browser, stored in the database and served from `/media`. You can also paste a path such as `profile-image.jpg` or a full `https://` URL. When you change the photo, regenerate `social-card.jpg` (1200×630) so link previews on WhatsApp and LinkedIn stay current.
 - Links (CV, certificates, social profiles, images) accept a relative path such as `ATS_CV.pdf` or a full `https://` URL. Empty certificate links hide the button.
 - Items appear on the site in the same order as the editor. An empty list hides that whole section on the public site.
 
