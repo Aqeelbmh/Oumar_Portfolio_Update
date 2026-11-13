@@ -1,0 +1,18 @@
+{
+  "name": "oumar-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Portfolio website with contact inbox and content admin API",
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env server/dev.js",
+    "start": "node --env-file-if-exists=.env server/dev.js",
+    "vercel:dev": "vercel dev"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.15.15"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
