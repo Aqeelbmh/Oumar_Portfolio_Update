@@ -27,7 +27,13 @@ const EDITORS = {
         span: 2,
         hint: 'Upload a photo or paste a path/URL. Uploads are resized to 1400px.',
       },
-      { key: 'cvUrl', label: 'CV file', hint: 'Path or full URL to the PDF' },
+      {
+        key: 'cvUrl',
+        label: 'CV file',
+        type: 'file',
+        span: 2,
+        hint: 'Upload a PDF or paste a path/URL. Uploads are stored in the database and served from /media.',
+      },
       { key: 'cvFilename', label: 'CV download filename' },
       { key: 'aboutTitle', label: 'About title' },
       { key: 'aboutHeading', label: 'About heading' },
@@ -509,6 +515,7 @@ function renderField(field, target) {
   }
 
   if (field.type === 'image') return imageField(field, target);
+  if (field.type === 'file') return fileField(field, target);
 
   const wrapper = h('label', {
     class: `field${field.span === 2 ? ' span-2' : ''}`,
@@ -659,6 +666,107 @@ function prepareImage(file) {
       };
       source.src = String(reader.result);
     };
+    reader.readAsDataURL(file);
+  });
+}
+
+function fileField(field, target) {
+  const wrapper = h('div', { class: 'field file-field' });
+  wrapper.append(h('span', { text: field.label }));
+
+  const row = h('div', { class: 'file-editor' });
+  const urlInput = h('input', { type: 'text', placeholder: 'ATS_CV.pdf or https://…' });
+  const fileInput = h('input', {
+    type: 'file',
+    accept: 'application/pdf,.pdf',
+    hidden: 'hidden',
+  });
+  const uploadButton = h(
+    'button',
+    { type: 'button', class: 'btn ghost' },
+    icon('fas fa-upload'),
+    'Upload PDF'
+  );
+  row.append(urlInput, uploadButton, fileInput);
+
+  const openLink = h(
+    'a',
+    { class: 'file-open', target: '_blank', rel: 'noopener' },
+    icon('fas fa-arrow-up-right-from-square'),
+    'Open current file'
+  );
+
+  wrapper.append(row, openLink);
+  if (field.hint) wrapper.append(h('span', { class: 'hint', text: field.hint }));
+
+  const sync = () => {
+    const value = target[field.key] || '';
+    urlInput.value = value;
+    openLink.hidden = !value;
+    if (value) openLink.href = value;
+  };
+  sync();
+
+  urlInput.addEventListener('input', () => {
+    target[field.key] = urlInput.value.trim();
+    openLink.hidden = !urlInput.value.trim();
+    if (urlInput.value.trim()) openLink.href = urlInput.value.trim();
+    markDirty();
+  });
+
+  uploadButton.addEventListener('click', () => fileInput.click());
+
+  fileInput.addEventListener('change', async () => {
+    const file = fileInput.files && fileInput.files[0];
+    if (!file) return;
+
+    const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+    if (!isPdf) {
+      toast('Choose a PDF file', 'error');
+      return;
+    }
+    if (file.size > 3_000_000) {
+      toast('That PDF is larger than 3 MB — compress it and try again', 'error');
+      return;
+    }
+
+    const label = uploadButton.innerHTML;
+    uploadButton.disabled = true;
+    uploadButton.textContent = 'Uploading…';
+
+    try {
+      const dataUrl = await readFileAsDataUrl(file);
+      const base64 = String(dataUrl).split(',')[1] || '';
+      const body = dataUrl.startsWith('data:application/pdf')
+        ? dataUrl
+        : `data:application/pdf;base64,${base64}`;
+
+      const data = await api('/api/assets', {
+        method: 'POST',
+        body: JSON.stringify({ dataUrl: body }),
+      });
+      target[field.key] = data.url;
+      sync();
+      markDirty();
+      toast('CV uploaded — press Save changes');
+    } catch (error) {
+      if (error.status === 401) return showLogin();
+      toast(error.message || 'Could not upload that PDF', 'error');
+    } finally {
+      uploadButton.innerHTML = label;
+      uploadButton.disabled = false;
+      fileInput.value = '';
+    }
+  });
+
+  return wrapper;
+}
+
+function readFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error('Could not read that file'));
+    reader.onload = () => resolve(String(reader.result));
     reader.readAsDataURL(file);
   });
 }

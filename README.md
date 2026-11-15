@@ -69,6 +69,7 @@ Every push to `main` on GitHub redeploys the site automatically. The custom doma
 ### Notes
 
 - `ADMIN_PASSWORD` is the only required secret for the admin panel. Use a long, unique password; logins are rate limited.
+- Wrap any value that contains `#` in double quotes (`ADMIN_PASSWORD="pa#ss"`). Unquoted, the `#` starts a comment and the rest of the password is silently dropped.
 - `SESSION_SECRET` signs the 12-hour admin session cookie. If omitted it falls back to `ADMIN_PASSWORD`.
 - `IP_SALT` is optional. It salts the hashed visitor IPs used for rate limiting.
 - Never commit `.env` or the `data/` folder.

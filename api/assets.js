@@ -12,9 +12,10 @@ import {
 } from './_lib/http.js';
 import { requireAuth } from './_lib/auth.js';
 
-const MAX_DATA_URL = 3 * 1024 * 1024;
-const MAX_BYTES = 2_000_000;
-const DATA_URL_PATTERN = /^data:(image\/(?:jpeg|png|webp|gif));base64,([A-Za-z0-9+/=]+)$/;
+const MAX_DATA_URL = 4_100_000;
+const MAX_BYTES = 3_000_000;
+const DATA_URL_PATTERN =
+  /^data:((?:image\/(?:jpeg|png|webp|gif))|application\/pdf);base64,([A-Za-z0-9+/=]+)$/;
 const ID_PATTERN = /^[a-f0-9]{24}$/;
 
 export default async function handler(req, res) {
@@ -46,7 +47,7 @@ async function getAsset(req, res) {
     res.end(bytes);
   } catch (error) {
     console.error('Failed to load asset:', error);
-    return fail(res, 500, 'Could not load image');
+    return fail(res, 500, 'Could not load file');
   }
 }
 
@@ -60,17 +61,17 @@ async function uploadAsset(req, res) {
     const body = await readJson(req, 4_200_000);
     const dataUrl = typeof body?.dataUrl === 'string' ? body.dataUrl : '';
     if (dataUrl.length > MAX_DATA_URL) {
-      return fail(res, 413, 'Image is too large. Please choose a smaller file.');
+      return fail(res, 413, 'File is too large. Please choose a smaller file.');
     }
 
     const match = DATA_URL_PATTERN.exec(dataUrl);
-    if (!match) return fail(res, 400, 'Expected a JPEG, PNG, WebP or GIF image.');
+    if (!match) return fail(res, 400, 'Expected a JPEG, PNG, WebP, GIF or PDF file.');
 
     const mime = match[1];
     const data = Buffer.from(match[2], 'base64');
-    if (data.length < 64) return fail(res, 400, 'Image file is empty.');
+    if (data.length < 64) return fail(res, 400, 'That file is empty.');
     if (data.length > MAX_BYTES) {
-      return fail(res, 413, 'Image is too large. Please choose a smaller file.');
+      return fail(res, 413, 'File is too large. Please choose a smaller file.');
     }
 
     const id = randomBytes(12).toString('hex');
@@ -84,7 +85,7 @@ async function uploadAsset(req, res) {
   } catch (error) {
     if (error.statusCode) return fail(res, error.statusCode, error.message);
     console.error('Failed to upload asset:', error);
-    return fail(res, 500, 'Could not save image');
+    return fail(res, 500, 'Could not save that file');
   }
 }
 

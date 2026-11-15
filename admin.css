@@ -229,6 +229,50 @@ button {
   background: var(--panel);
 }
 
+.file-field {
+  grid-column: 1 / -1;
+}
+
+.file-editor {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.file-editor input[type='text'] {
+  flex: 1 1 280px;
+  min-width: 200px;
+  padding: 11px 13px;
+  border-radius: 10px;
+  border: 1px solid rgba(28, 26, 22, 0.25);
+  background: rgba(255, 252, 245, 0.75);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.file-editor input[type='text']:focus {
+  outline: none;
+  border-color: rgba(164, 86, 42, 0.6);
+  box-shadow: 0 0 0 3px rgba(164, 86, 42, 0.14);
+  background: var(--panel);
+}
+
+.file-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  margin-top: 10px;
+  color: var(--accent);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.file-open:hover {
+  text-decoration: underline;
+}
+
 .form-error {
   color: var(--danger);
   font-size: 0.87rem;
